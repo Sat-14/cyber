@@ -37,7 +37,7 @@ This malware detection system implements state-of-the-art machine learning techn
 ## Architecture
 
 ### System Overview
-
+```
 
 ┌─────────────────────────────────────────────────────────────┐
 │                   Malware Detection System                   │
@@ -92,8 +92,8 @@ This malware detection system implements state-of-the-art machine learning techn
 ```
 
 ### Component Architecture
-
 ```
+
 ┌────────────────────────────────────────────────────────────────┐
 │                        Main Detector                            │
 │                    (main_detector.py)                           │
@@ -118,8 +118,8 @@ This malware detection system implements state-of-the-art machine learning techn
 │  └──────────────┘  └──────────────┘  └──────────────────┘   │
 │                                                                 │
 └────────────────────────────────────────────────────────────────┘
-```
 
+```
 ## Research Foundation
 
 This system is built upon peer-reviewed academic research in malware detection:
