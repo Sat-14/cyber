@@ -1,6 +1,6 @@
-I'll create a comprehensive README in an artifact for you to easily copy and paste.
 
-```markdown
+
+
 # Malware Detection System
 
 A comprehensive machine learning-based malware detection system implementing defensive security techniques for JPEG and PE file analysis with forensic tracing capabilities.
@@ -38,7 +38,7 @@ This malware detection system implements state-of-the-art machine learning techn
 
 ### System Overview
 
-```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                   Malware Detection System                   │
 └─────────────────────────────────────────────────────────────┘
