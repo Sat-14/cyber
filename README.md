@@ -461,3 +461,507 @@ For issues, questions, or contributions:
 ## License
 
 This implementation uses multiple open-source tools, each with their own licenses. Refer to individual tool repositories for license details.
+# Phase 2: Metadata Extraction & Augmentation
+
+## Overview
+Phase 2 implements comprehensive metadata extraction from various file types for forensic analysis. This phase focuses on **must-have** open-source tools to extract actionable intelligence from files detected in Phase 1.
+
+## Architecture
+
+Phase 2 aggregates metadata from multiple sources:
+1. **EXIF Metadata** - Images (GPS, timestamps, camera info)
+2. **PE Analysis** - Executables (headers, imports, packers)
+3. **Zone.Identifier** - Download sources (URLs, referrer)
+4. **Browser Forensics** - Chrome/Chromium artifacts (history, downloads, cookies)
+5. **Timeline Generation** - Chronological correlation of events
+
+## Tools Implemented (Must-Have Only)
+
+### 1. EXIF Metadata Extraction
+- **ExifTool**: Industry-standard for 100+ file formats
+- Extracts: GPS coordinates, timestamps, camera make/model, thumbnails
+- Script: `scripts/exif_extractor.py`
+
+### 2. PE File Analysis
+- **pefile**: Python library for parsing PE files
+- Extracts: Headers, imports/exports, resources, imphash, compile time
+- Detects: Packers, suspicious APIs, code signing
+- Script: `scripts/pe_analyzer.py`
+
+### 3. Zone.Identifier & ADS Parser
+- **PowerShell Get-Item**: Native Windows ADS parsing
+- Extracts: Zone ID (0-4), download URL, referrer URL
+- Detects: Downloaded files from Internet (Zone 3), Restricted Sites (Zone 4)
+- Script: `scripts/zone_identifier.py`
+
+### 4. Browser Forensics
+- **SQLite-based extraction** for Chrome/Chromium browsers
+- Extracts: History, downloads, cookies, autofill, bookmarks
+- Multi-platform: Windows, Linux, macOS
+- Script: `scripts/browser_forensics.py`
+
+### 5. Metadata Aggregator (Main Module)
+- **Orchestrates all extraction modules**
+- Generates unified timeline of events
+- Risk assessment across all metadata sources
+- Script: `scripts/metadata_extractor.py`
+
+## Installation
+
+### Prerequisites
+- Python 3.8+
+- ExifTool (Windows: download, Linux: apt, macOS: brew)
+- PowerShell (Windows only, for Zone.Identifier)
+
+### Quick Start
+
+```bash
+# 1. Install Python dependencies
+pip install -r requirements.txt
+
+# 2. Install ExifTool
+# Windows: Download from https://exiftool.org/
+# Linux: sudo apt-get install libimage-exiftool-perl
+# macOS: brew install exiftool
+
+# 3. Run setup and verification
+python setup.py --install
+python setup.py --verify
+
+# 4. Test with a file
+python scripts/metadata_extractor.py --file suspicious.exe --assess-risk
+```
+
+## Directory Structure
+
+```
+Phase2-Metadata/
+├── scripts/
+│   ├── exif_extractor.py         # EXIF metadata extraction
+│   ├── pe_analyzer.py            # PE file analysis
+│   ├── zone_identifier.py        # Zone.Identifier parser
+│   ├── browser_forensics.py      # Browser artifact extraction
+│   └── metadata_extractor.py     # Main aggregator (use this!)
+├── tools/                        # External tools (ExifTool)
+├── output/                       # Extracted metadata output
+├── requirements.txt              # Python dependencies
+├── setup.py                      # Installation & verification
+└── README.md                     # This file
+```
+
+## Usage Examples
+
+### 1. Analyze Single File (Recommended)
+
+```bash
+# Comprehensive analysis with risk assessment
+python scripts/metadata_extractor.py --file suspicious.exe --assess-risk --output report.json
+
+# Text output with timeline
+python scripts/metadata_extractor.py --file malware.exe --assess-risk --timeline --format text
+```
+
+### 2. Scan Directory
+
+```bash
+# Scan directory recursively
+python scripts/metadata_extractor.py --directory C:\Downloads --recursive --assess-risk
+
+# Filter by extension
+python scripts/metadata_extractor.py --directory /tmp --recursive --extensions .exe .dll --output scan_results.json
+```
+
+### 3. Batch Analysis
+
+```bash
+# Create file list (file_list.txt with one path per line)
+# Then analyze all files
+python scripts/metadata_extractor.py --batch file_list.txt --assess-risk --timeline --output batch_report.json
+```
+
+### 4. Individual Module Usage
+
+#### EXIF Extraction
+```bash
+python scripts/exif_extractor.py --file photo.jpg --output exif_data.json
+```
+
+#### PE Analysis
+```bash
+python scripts/pe_analyzer.py --file suspicious.exe --output pe_analysis.json --check-virustotal
+```
+
+#### Zone.Identifier
+```bash
+# Single file
+python scripts/zone_identifier.py --file downloaded.exe --assess-risk
+
+# Directory scan
+python scripts/zone_identifier.py --directory C:\Downloads --recursive --output zone_report.json
+```
+
+#### Browser Forensics
+```bash
+# Auto-detect Chrome profiles
+python scripts/browser_forensics.py --auto-detect --browser chrome --assess-risk
+
+# Specific profile
+python scripts/browser_forensics.py --profile "C:\Users\user\AppData\Local\Google\Chrome\User Data\Default" --output browser_artifacts.json
+
+# All profiles
+python scripts/browser_forensics.py --all-profiles --browser chrome --format json
+```
+
+## Output Formats
+
+All scripts support multiple output formats:
+
+### JSON (Machine-readable)
+```bash
+--format json --output results.json
+```
+
+### Text (Human-readable)
+```bash
+--format text
+```
+
+### Example JSON Output Structure
+```json
+{
+  "scan_timestamp": "2025-11-14T12:34:56Z",
+  "total_files_analyzed": 1,
+  "results": [
+    {
+      "file_path": "C:\\Downloads\\suspicious.exe",
+      "file_metadata": {
+        "file_size": 102400,
+        "file_extension": ".exe",
+        "created_time": "2025-11-14T10:00:00Z"
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha256": "..."
+      },
+      "zone_identifier": {
+        "zone_id": 3,
+        "zone_name": "Internet",
+        "host_url": "https://malicious-site.com/payload.exe"
+      },
+      "pe_metadata": {
+        "pe_type": "PE32",
+        "compile_time": "2025-11-01T08:30:00Z",
+        "is_packed": true,
+        "imphash": "abc123..."
+      },
+      "risk_assessment": {
+        "risk_level": "high",
+        "risk_score": 75,
+        "indicators": [
+          "Downloaded from Internet (Zone 3)",
+          "PE file is packed (possible obfuscation)",
+          "PE file is not digitally signed"
+        ]
+      }
+    }
+  ]
+}
+```
+
+## Key Features
+
+### Metadata Extraction
+
+#### EXIF (Images)
+- GPS coordinates (latitude, longitude, altitude)
+- Camera make, model, lens
+- Timestamps: DateTimeOriginal, CreateDate, ModifyDate
+- Software used, copyright info
+- Thumbnail extraction
+
+#### PE (Executables)
+- DOS header, PE header, Optional header
+- Section analysis (.text, .data, .rsrc)
+- Import/Export tables
+- Resource analysis
+- Imphash, Rich header hash
+- Packer detection (UPX, ASPack, etc.)
+- Digital signature verification
+- Compile timestamp
+
+#### Zone.Identifier (Downloads)
+- Zone ID: 0=Local, 1=Intranet, 2=Trusted, 3=Internet, 4=Restricted
+- HostUrl: Direct download source
+- ReferrerUrl: Website that linked to download
+- Alternate Data Streams listing
+
+#### Browser Forensics (Chrome/Chromium)
+- Browsing history with visit counts
+- Download history with referrer URLs
+- Cookies (domain, name, creation, expiry)
+- Autofill data (forms, addresses)
+- Timeline of browser activity
+
+### Risk Assessment
+
+The `--assess-risk` flag provides security risk scoring:
+
+**Risk Levels**: Low (0-29), Medium (30-49), High (50-69), Critical (70-100)
+
+**Risk Indicators**:
+- High-risk file extensions (.exe, .dll, .scr, .bat, .vbs)
+- Downloads from Internet (Zone 3) or Restricted Sites (Zone 4)
+- Suspicious download URLs (malware, crack, keygen, hack)
+- Packed executables (obfuscation)
+- Unsigned PE files
+- Suspicious API imports (VirtualAlloc, WriteProcessMemory)
+- Images with GPS coordinates (privacy risk)
+
+### Timeline Generation
+
+The `--timeline` flag generates chronological event timeline:
+
+**Event Sources**:
+- File system (created, modified, accessed)
+- EXIF (photo taken, modified)
+- PE (compile time)
+- Browser (downloads, visits)
+- Zone.Identifier (download time)
+
+**Output**: Sorted list of events with timestamps, types, sources
+
+## Integration with Phase 1
+
+Phase 2 seamlessly integrates with [Phase 1 (Detection)](../Phase1-Detection) for comprehensive malware analysis.
+
+### Automated Integration (Recommended)
+
+Use the integrated analysis script that combines both phases:
+
+```bash
+# Single command for complete Phase 1 + Phase 2 analysis
+python scripts/phase1_phase2_integration.py --file suspicious.exe --output report.txt
+
+# JSON format for automated processing
+python scripts/phase1_phase2_integration.py --file malware.dll --format json --output analysis.json
+```
+
+**Integrated Workflow**:
+1. **Phase 1 Detection**: YARA rules + PE analysis + VirusTotal
+2. **Phase 2 Metadata**: Zone.Identifier + Browser + Hashes + Timeline
+3. **Correlation Analysis**: Combines findings from both phases
+4. **Unified Threat Score**: 0-100 score based on all indicators
+5. **Recommended Actions**: QUARANTINE, BLOCK, MONITOR, or ALLOW
+
+### Example Integrated Report
+
+```
+================================================================================
+PHASE 1 + PHASE 2 INTEGRATED FORENSIC REPORT
+================================================================================
+File: malware.exe
+Threat Level: HIGH
+Threat Score: 85/100
+
+PHASE 1: MALWARE DETECTION
+--------------------------------------------------------------------------------
+Malware Detected: YES
+YARA Rule Matches: 3 (ransomware, packer, suspicious_imports)
+PE Analysis: SUSPICIOUS (score: 75/100)
+VirusTotal Positives: 45/70
+
+PHASE 2: METADATA EXTRACTION
+--------------------------------------------------------------------------------
+SHA256: abc123...
+Zone.Identifier: Zone 3 (Internet)
+Download URL: https://malicious-site.example.com/payload.exe
+Risk Level: CRITICAL
+Risk Score: 90/100
+
+CORRELATION ANALYSIS
+--------------------------------------------------------------------------------
+Key Findings:
+  1. Malware detected AND downloaded from Internet (Zone 3)
+  2. YARA detected (3 rules) AND suspicious download URL
+  3. PE file flagged as suspicious by Phase 1
+  4. VirusTotal: 45 engines detected malware
+
+RECOMMENDED ACTIONS
+--------------------------------------------------------------------------------
+  1. QUARANTINE file immediately
+  2. Block download source URL in firewall
+  3. Scan system for additional infections
+  4. Report to security team
+  5. Preserve forensic evidence
+================================================================================
+```
+
+### Manual Integration
+
+For step-by-step control:
+
+```bash
+# Step 1: Phase 1 - Detect malware
+cd ../Phase1-Detection
+python scripts/integrated_detector.py --file suspicious.exe --format json > detection.json
+
+# Step 2: Phase 2 - Extract metadata
+cd ../Phase2-Metadata
+python scripts/metadata_extractor.py --file suspicious.exe --assess-risk --output metadata.json
+
+# Step 3: Combine results manually
+# Review both detection.json and metadata.json
+```
+
+### Integration Benefits
+
+1. **Download Source Tracing**: Zone.Identifier reveals where malware was downloaded from
+2. **Timeline Correlation**: Match file creation time with detection events
+3. **Attribution**: PE metadata + download URL links to threat actors
+4. **Browser Evidence**: Download history confirms infection vector
+5. **Hash Correlation**: SHA256 matches with threat intelligence databases
+6. **Unified Threat Scoring**: Combined risk assessment from both phases
+7. **Automated Response**: Actions based on correlation findings
+
+See [Phase 1 README](../Phase1-Detection/README.md) for malware detection capabilities.
+
+## Performance Optimization
+
+- **Parallel Processing**: Analyze multiple files concurrently
+- **Database Caching**: SQLite copies for browser forensics (avoid locks)
+- **Stream Processing**: Handle large datasets efficiently
+- **Selective Extraction**: Filter by extension to reduce overhead
+
+## Security Considerations
+
+1. **Data Privacy**: Handle extracted metadata (GPS, personal info) securely
+2. **File Locks**: Browser databases copied to temp to avoid locks
+3. **Encrypted Data**: Cookie values may be DPAPI-encrypted on Windows
+4. **Chain of Custody**: All operations logged with timestamps
+5. **Hash Verification**: SHA256 hashes for integrity validation
+
+## Troubleshooting
+
+### ExifTool Not Found
+```bash
+# Verify installation
+exiftool -ver
+
+# Add to PATH (Windows)
+set PATH=%PATH%;C:\Users\user\Desktop\Cyber\Phase2-Metadata\tools\exiftool
+
+# Or use full path in scripts
+```
+
+### PowerShell Execution Error
+```powershell
+# Enable scripts (Windows)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### Browser Database Locked
+- Close browser before analysis
+- Scripts create temporary copies to avoid locks
+- Check temp directory: `Phase2-Metadata/.browser_forensics_temp/`
+
+### Python Module Not Found
+```bash
+# Install missing modules
+pip install -r requirements.txt
+
+# Verify
+python setup.py --verify
+```
+
+## Advanced Usage
+
+### Custom Risk Assessment Weights
+
+Modify `metadata_extractor.py` risk scoring:
+```python
+# Line ~398: Adjust risk scores
+if zone_id == 3:  # Internet
+    risk_score += 30  # Change this value
+```
+
+### Output to Database
+
+```bash
+# Extract metadata and save to SQLite
+python scripts/metadata_extractor.py --directory /evidence --recursive --output metadata.db --format sqlite
+```
+
+### Integration with Phase 3 (Path Reconstruction)
+
+```bash
+# Phase 2 output feeds into Phase 3
+python scripts/metadata_extractor.py --file malware.exe --output phase2_output.json
+python ../Phase3-PathReconstruction/path_reconstructor.py --metadata phase2_output.json
+```
+
+## Testing
+
+```bash
+# Verify all modules
+python setup.py --verify
+
+# Test individual modules
+python scripts/zone_identifier.py --help
+python scripts/browser_forensics.py --help
+python scripts/metadata_extractor.py --help
+
+# Test with sample file
+python scripts/metadata_extractor.py --file README.md --assess-risk --format text
+```
+
+## References
+
+### Documentation
+- ExifTool: https://exiftool.org/
+- pefile: https://github.com/erocarrera/pefile
+- Chrome Forensics: https://www.digitalforensics.com/blog/chrome-forensics/
+- Zone.Identifier: https://docs.microsoft.com/en-us/windows/security/threat-protection/
+
+### Research Papers
+- "PE-Miner: Mining Structural Information to Detect Malicious Executables in Realtime" (Shafiq et al.)
+- "Detecting Malware in JPEG Files Through EXIF Tag Analysis using Machine Learning" (Majumdar)
+
+### Related Projects
+- ZIWIZ Forensic Pipeline (Phase 1: Detection, Phase 3: Path Reconstruction, Phase 4: Reporting)
+
+## Support
+
+For issues, questions, or feature requests:
+1. Check troubleshooting section above
+2. Verify installation: `python setup.py --verify`
+3. Review script help: `python scripts/metadata_extractor.py --help`
+4. Check Phase 1 integration for workflow issues
+
+## License
+
+Open-source tools used under their respective licenses:
+- ExifTool: Perl Artistic License / GPL
+- pefile: MIT License
+- Python scripts: Same as parent ZIWIZ project
+
+---
+
+**Quick Reference Commands**
+
+```bash
+# Setup
+python setup.py --install --verify
+
+# Single file analysis
+python scripts/metadata_extractor.py --file malware.exe --assess-risk --timeline
+
+# Directory scan
+python scripts/metadata_extractor.py --directory C:\Downloads --recursive --assess-risk --output scan.json
+
+# Browser forensics
+python scripts/browser_forensics.py --auto-detect --browser chrome --assess-risk
+
+# Zone.Identifier check
+python scripts/zone_identifier.py --directory C:\Downloads --recursive --assess-risk
+```
+
