@@ -47,7 +47,7 @@
 
 ---
 
-## 🎯 Executive Summary
+##  Executive Summary
 
 **ZIWIZ** (Zero-day Intelligence and Weaponized Intrusion Zoning) is an advanced, multi-phase digital forensic analysis framework that combines traditional malware detection techniques with cutting-edge artificial intelligence for predictive threat intelligence.
 
@@ -57,10 +57,10 @@ Traditional forensic tools tell you **what happened**. ZIWIZ tells you what happ
 
 The framework employs **ZORA** (Zero-day Offensive Risk Analyzer), an ensemble machine learning system trained on **6,236 real-world Cyber Threat Intelligence (CTI) reports**, capable of:
 
-- 🎯 **Predicting the next attack techniques** with 89% average confidence
-- 🕵️ **Attributing attacks to specific APT groups** based on technique patterns
-- ⏰ **Forecasting 24-hour attack timelines** with minute-level precision
-- 🛡️ **Generating proactive defensive recommendations** before attacks occur
+-  **Predicting the next attack techniques** with 89% average confidence
+-  **Attributing attacks to specific APT groups** based on technique patterns
+-  **Forecasting 24-hour attack timelines** with minute-level precision
+-  **Generating proactive defensive recommendations** before attacks occur
 
 ### Core Value Proposition
 
@@ -86,56 +86,56 @@ Traditional Forensics:        ZIWIZ with ZORA:
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
-### 🔍 Multi-Phase Forensic Analysis
+### Multi-Phase Forensic Analysis
 
 <details>
 <summary><b>Phase 1: Advanced Detection Engine</b></summary>
 
-- ✅ **YARA Rule Matching** - 100+ community malware signatures
-- ✅ **PE/ELF Analysis** - Deep executable structure inspection
-- ✅ **Entropy Calculation** - Packing and obfuscation detection
-- ✅ **API Call Analysis** - Suspicious Windows API identification
-- ✅ **VirusTotal Integration** - 70+ antivirus engine results
-- ✅ **String Extraction** - IOC and artifact discovery
-- ✅ **Section Analysis** - Abnormal executable sections
+-  **YARA Rule Matching** - 100+ community malware signatures
+-  **PE/ELF Analysis** - Deep executable structure inspection
+-  **Entropy Calculation** - Packing and obfuscation detection
+-  **API Call Analysis** - Suspicious Windows API identification
+-  **VirusTotal Integration** - 70+ antivirus engine results
+-  **String Extraction** - IOC and artifact discovery
+-  **Section Analysis** - Abnormal executable sections
 </details>
 
 <details>
 <summary><b>Phase 2: Comprehensive Metadata Extraction</b></summary>
 
-- ✅ **Zone.Identifier (ADS)** - Windows download provenance
-- ✅ **EXIF Data** - Image/document metadata
-- ✅ **File Timestamps** - MACB timeline analysis
-- ✅ **Browser History** - Download chain reconstruction
-- ✅ **Email Headers** - Phishing campaign tracking
-- ✅ **Certificate Analysis** - Code signing validation
+-  **Zone.Identifier (ADS)** - Windows download provenance
+-  **EXIF Data** - Image/document metadata
+-  **File Timestamps** - MACB timeline analysis
+-  **Browser History** - Download chain reconstruction
+-  **Email Headers** - Phishing campaign tracking
+-  **Certificate Analysis** - Code signing validation
 </details>
 
 <details>
 <summary><b>Phase 3: Attack Path Reconstruction</b></summary>
 
-- ✅ **Timeline Builder** - Chronological event aggregation
-- ✅ **Attack Chain Analysis** - Technique sequence identification
-- ✅ **Kill Chain Mapping** - MITRE ATT&CK phase coverage
-- ✅ **Lateral Movement Tracking** - Network propagation paths
-- ✅ **Persistence Mechanisms** - Registry, scheduled tasks, services
-- ✅ **Impact Assessment** - File encryption, deletion, exfiltration
+-  **Timeline Builder** - Chronological event aggregation
+-  **Attack Chain Analysis** - Technique sequence identification
+-  **Kill Chain Mapping** - MITRE ATT&CK phase coverage
+-  **Lateral Movement Tracking** - Network propagation paths
+-  **Persistence Mechanisms** - Registry, scheduled tasks, services
+-  **Impact Assessment** - File encryption, deletion, exfiltration
 </details>
 
 <details>
 <summary><b>Phase 4: Intelligent Unified Reporting</b></summary>
 
-- ✅ **Case Management** - Evidence tracking and chain of custody
-- ✅ **ZORA AI Integration** - Predictive threat intelligence
-- ✅ **Multi-Format Output** - PDF, HTML, JSON, Markdown
-- ✅ **Executive Summaries** - Non-technical stakeholder reports
-- ✅ **Technical Deep Dives** - Complete forensic details
-- ✅ **Actionable Recommendations** - Priority-coded defensive actions
+-  **Case Management** - Evidence tracking and chain of custody
+-  **ZORA AI Integration** - Predictive threat intelligence
+-  **Multi-Format Output** - PDF, HTML, JSON, Markdown
+-  **Executive Summaries** - Non-technical stakeholder reports
+-  **Technical Deep Dives** - Complete forensic details
+-  **Actionable Recommendations** - Priority-coded defensive actions
 </details>
 
-### 🤖 ZORA AI Capabilities
+###  ZORA AI Capabilities
 
 - **611 MITRE ATT&CK Techniques** - Complete enterprise matrix coverage
 - **88 Threat Actor Profiles** - APT groups from 15+ countries
@@ -144,7 +144,7 @@ Traditional Forensics:        ZIWIZ with ZORA:
 - **99,062 Co-occurrence Relationships** - Technique pair probabilities
 - **5 Ensemble Methods** - Hybrid prediction for maximum accuracy
 
-### 💻 Multiple Interfaces
+###  Multiple Interfaces
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -180,7 +180,7 @@ Traditional Forensics:        ZIWIZ with ZORA:
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ### Overall Framework Design
 
@@ -360,7 +360,7 @@ Input File
 
 ---
 
-## 🔍 Phase 1: Detection Engine
+##  Phase 1: Detection Engine
 
 ### Purpose
 
@@ -727,7 +727,7 @@ Phase1-Detection/
 
 ---
 
-## 📎 Phase 2: Metadata Extraction
+##  Phase 2: Metadata Extraction
 
 ### Purpose
 
@@ -1113,7 +1113,7 @@ Phase2-Metadata/
 
 ---
 
-## 🔗 Phase 3: Path Reconstruction
+##  Phase 3: Path Reconstruction
 
 ### Purpose
 
@@ -1718,7 +1718,7 @@ Phase3-Reconstruction/
 
 ---
 
-## 📊 Phase 4: Unified Reporting
+## Phase 4: Unified Reporting
 
 ### Purpose
 
@@ -2074,7 +2074,7 @@ Phase4-Reporting/
 
 ---
 
-## 🤖 ZORA AI Engine
+##  ZORA AI Engine
 
 ### Overview
 
@@ -2730,7 +2730,7 @@ ZORA-AI/
 
 ---
 
-## 📥 Installation
+##  Installation
 
 ### System Requirements
 
@@ -2876,7 +2876,7 @@ python ziwiz_scan.py samples/test_malware.py
 
 ---
 
-## 🚀 Usage Guide
+##  Usage Guide
 
 ZIWIZ provides **3 interfaces** for different use cases:
 
@@ -3079,7 +3079,7 @@ For non-technical users on Windows:
 
 ---
 
-## 📄 Report Formats
+##  Report Formats
 
 ### PDF Report
 
@@ -3144,7 +3144,7 @@ Best for: Documentation, wikis, version control
 
 ---
 
-## ⚙️ Technical Specifications
+##  Technical Specifications
 
 ### Performance Benchmarks
 
@@ -3235,7 +3235,7 @@ ziwiz.export_report(
 
 ---
 
-## 🎯 Workflow Examples
+##  Workflow Examples
 
 ### Example 1: Incident Response
 
@@ -3340,7 +3340,7 @@ ziwiz.export_report(
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -3459,7 +3459,7 @@ python ziwiz_scan.py file.exe --no-pdf
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions to ZIWIZ! Areas for contribution:
 
@@ -3478,7 +3478,7 @@ We welcome contributions to ZIWIZ! Areas for contribution:
 
 ---
 
-## 📚 References & Further Reading
+##  References & Further Reading
 
 ### MITRE ATT&CK Framework
 - [MITRE ATT&CK v15.0](https://attack.mitre.org/)
@@ -3498,19 +3498,19 @@ We welcome contributions to ZIWIZ! Areas for contribution:
 
 ---
 
-## 📜 License
+##  License
 
 This project is licensed under the **Educational License** - see LICENSE file for details.
 
 **Summary:**
-- ✅ Free for educational and research purposes
-- ✅ Free for non-commercial security analysis
-- ❌ Commercial use requires separate license
-- ❌ No warranty provided
+-  Free for educational and research purposes
+-  Free for non-commercial security analysis
+-  Commercial use requires separate license
+-  No warranty provided
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - **MITRE Corporation** - ATT&CK Framework
 - **VirusTotal** - Community malware intelligence
@@ -3520,7 +3520,7 @@ This project is licensed under the **Educational License** - see LICENSE file fo
 
 ---
 
-## 📧 Contact & Support
+##  Contact & Support
 
 - **Issues:** [GitHub Issues](https://github.com/your-org/ziwiz-framework/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/your-org/ziwiz-framework/discussions)
@@ -3536,6 +3536,6 @@ This project is licensed under the **Educational License** - see LICENSE file fo
 
 Made with 🔍 by security researchers, for security researchers
 
-⭐ Star this repo if you find it useful!
+ Star this repo if you find it useful!
 
 </div>
